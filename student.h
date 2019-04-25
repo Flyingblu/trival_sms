@@ -1,6 +1,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
-#include <QApplication>
+
+#include <QString>
 
 using namespace std;
 
@@ -10,11 +11,15 @@ class Student;
 
 class Data::Student {
 public:
-    string first_name;
-    string last_name;
-//    Student(string first, string second): first_name(first), last_name(second) { };
-    ~Student();
-    string get_name() {
+    QString first_name;
+    QString last_name;
+    int age;
+    QString stu_id;
+
+    Student() {}
+    Student(QString first, QString second): first_name(first), last_name(second) { };
+    ~Student() {}
+    QString get_name() {
         return this->first_name + " " + this->last_name;
     }
 };

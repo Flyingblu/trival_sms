@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>780</width>
     <height>300</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="add_pb">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -34,10 +34,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Add</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="del_pb">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -47,27 +47,53 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Delete</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="first_name_te">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>30</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="last_name_te">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>100</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="first_name_label">
     <property name="geometry">
      <rect>
       <x>210</x>
       <y>10</y>
-      <width>171</width>
-      <height>21</height>
+      <width>81</width>
+      <height>16</height>
      </rect>
     </property>
+    <property name="text">
+     <string>First Name</string>
+    </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit_2">
+   <widget class="QLabel" name="last_name_label">
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>40</y>
-      <width>171</width>
-      <height>21</height>
+      <y>80</y>
+      <width>121</width>
+      <height>16</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Last Name</string>
     </property>
    </widget>
   </widget>
@@ -76,7 +102,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>780</width>
      <height>22</height>
     </rect>
    </property>

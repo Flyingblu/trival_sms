@@ -17,13 +17,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_listWidget_currentRowChanged(int currentRow);
+
+    void on_add_pb_clicked();
+
+    void on_del_pb_clicked();
 
 private:
     Ui::MainWindow *ui;
-    vector<Data::Student> students;
+    std::vector<Data::Student> students;
 };
 
 #endif // MAINWINDOW_H
