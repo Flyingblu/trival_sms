@@ -30,6 +30,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::vector<Data::Student> students;
+    void clear_formdata();
 };
 
 #endif // MAINWINDOW_H
