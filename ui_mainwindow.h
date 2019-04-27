@@ -12,12 +12,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -30,10 +30,10 @@ public:
     QListWidget *listWidget;
     QPushButton *add_pb;
     QPushButton *del_pb;
-    QTextEdit *first_name_te;
-    QTextEdit *last_name_te;
     QLabel *first_name_label;
     QLabel *last_name_label;
+    QLineEdit *first_name_le;
+    QLineEdit *last_name_le;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -54,18 +54,18 @@ public:
         del_pb = new QPushButton(centralWidget);
         del_pb->setObjectName(QString::fromUtf8("del_pb"));
         del_pb->setGeometry(QRect(240, 190, 113, 32));
-        first_name_te = new QTextEdit(centralWidget);
-        first_name_te->setObjectName(QString::fromUtf8("first_name_te"));
-        first_name_te->setGeometry(QRect(210, 30, 171, 31));
-        last_name_te = new QTextEdit(centralWidget);
-        last_name_te->setObjectName(QString::fromUtf8("last_name_te"));
-        last_name_te->setGeometry(QRect(210, 100, 171, 31));
         first_name_label = new QLabel(centralWidget);
         first_name_label->setObjectName(QString::fromUtf8("first_name_label"));
         first_name_label->setGeometry(QRect(210, 10, 81, 16));
         last_name_label = new QLabel(centralWidget);
         last_name_label->setObjectName(QString::fromUtf8("last_name_label"));
         last_name_label->setGeometry(QRect(210, 80, 121, 16));
+        first_name_le = new QLineEdit(centralWidget);
+        first_name_le->setObjectName(QString::fromUtf8("first_name_le"));
+        first_name_le->setGeometry(QRect(210, 30, 171, 31));
+        last_name_le = new QLineEdit(centralWidget);
+        last_name_le->setObjectName(QString::fromUtf8("last_name_le"));
+        last_name_le->setGeometry(QRect(210, 100, 171, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

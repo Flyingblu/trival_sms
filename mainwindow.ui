@@ -50,26 +50,6 @@
      <string>Delete</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="first_name_te">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>30</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="last_name_te">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>100</y>
-      <width>171</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="first_name_label">
     <property name="geometry">
      <rect>
@@ -94,6 +74,26 @@
     </property>
     <property name="text">
      <string>Last Name</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="first_name_le">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>30</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="last_name_le">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>100</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
   </widget>

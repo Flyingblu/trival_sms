@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "student.h"
+#include "ui_mainwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,8 @@ private slots:
     void on_add_pb_clicked();
 
     void on_del_pb_clicked();
+
+    void on_listWidget_itemClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
