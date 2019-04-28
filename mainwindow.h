@@ -31,6 +31,8 @@ private:
     Ui::MainWindow *ui;
     std::vector<Data::Student> students;
     void clear_formdata();
+    void read_data(string path);
+    void write_data(string path);
 };
 
 #endif // MAINWINDOW_H
