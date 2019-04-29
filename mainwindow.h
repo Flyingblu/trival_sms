@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(std::string data_path, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -33,15 +33,19 @@ private slots:
 
     void on_actionOpen_triggered();
 
+    void on_actionSave_as_triggered();
+
 private:
     Ui::MainWindow *ui;
     std::vector<Data::Student> students;
-    std::string data_path = "/Users/flyingblu/data.json";
+    std::string data_path;
+    std::string file_name;
     bool save_on_modify = true;
     void clear_formdata();
     void json_desrialize(string path);
     void json_serialize(string path);
     void closeEvent(QCloseEvent *event);
+    void set_data_path(string file_path);
 };
 
 #endif // MAINWINDOW_H

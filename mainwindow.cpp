@@ -7,11 +7,12 @@
 
 using namespace std;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(std::string data_path, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->set_data_path(data_path);
     json_desrialize(this->data_path);
     // initialize the gender combo box.
     ui->gender_cb->addItem("Set gender...");
@@ -154,6 +155,15 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::on_actionOpen_triggered()
 {
-    this->data_path = QFileDialog::getOpenFileName().toStdString();
+    this->set_data_path(QFileDialog::getOpenFileName().toStdString());
     this->json_desrialize(this->data_path);
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    QString data_path = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                  "untitled.json");;
+    this->set_data_path(data_path.toStdString());
+
+    this->json_serialize(this->data_path);
 }

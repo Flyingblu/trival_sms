@@ -24,6 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+INCLUDEPATH += /usr/include/openssl
+
 SOURCES += \
         main.cpp \
         mainwindow.cpp \

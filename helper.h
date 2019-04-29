@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <QString>
+#include "mainwindow.h"
 
 using namespace std;
 
@@ -34,6 +35,18 @@ bool is_char_or_int(QString input) {
             return false;
     }
     return true;
+}
+
+void MainWindow::set_data_path(string file_path) {
+    // update data_path, file_name and window title each time being called
+    this->data_path = file_path;
+    auto i = file_path.end() - 1;
+    for(; i != file_path.begin() - 1; i--) {
+        if(*i == '/')
+            break;
+    }
+    this->file_name = string(i+1, file_path.end());
+    this->setWindowTitle(QString::fromStdString(this->file_name + " - Student Management System"));
 }
 
 #endif // HELPER_H

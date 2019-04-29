@@ -32,6 +32,7 @@ public:
     QAction *actionSave;
     QAction *actionSave_on_edit;
     QAction *actionOpen;
+    QAction *actionSave_as;
     QWidget *centralWidget;
     QListWidget *listWidget;
     QPushButton *add_pb;
@@ -69,6 +70,8 @@ public:
         actionSave_on_edit->setChecked(true);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
+        actionSave_as = new QAction(MainWindow);
+        actionSave_as->setObjectName(QString::fromUtf8("actionSave_as"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         listWidget = new QListWidget(centralWidget);
@@ -147,6 +150,7 @@ public:
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionSave);
+        menuFile->addAction(actionSave_as);
         menuFile->addAction(actionSave_on_edit);
 
         retranslateUi(MainWindow);
@@ -156,10 +160,11 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Student Management System", nullptr));
         actionSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
         actionSave_on_edit->setText(QApplication::translate("MainWindow", "Save on edit", nullptr));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", nullptr));
+        actionSave_as->setText(QApplication::translate("MainWindow", "Save as...", nullptr));
         add_pb->setText(QApplication::translate("MainWindow", "Add", nullptr));
         del_pb->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         first_name_label->setText(QApplication::translate("MainWindow", "First Name", nullptr));
