@@ -30,7 +30,9 @@ SOURCES += \
         startup.cpp
 
 HEADERS += \
+        helper.h \
         json.h \
+        json_handler.h \
         mainwindow.h \
         startup.h \
         student.h
@@ -43,3 +45,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    student_gen.py

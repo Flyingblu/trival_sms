@@ -10,12 +10,14 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -27,6 +29,9 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionSave;
+    QAction *actionSave_on_edit;
+    QAction *actionOpen;
     QWidget *centralWidget;
     QListWidget *listWidget;
     QPushButton *add_pb;
@@ -45,7 +50,9 @@ public:
     QLabel *last_name_warning;
     QLabel *stu_id_warning;
     QLabel *age_warning;
+    QLabel *notification_label;
     QMenuBar *menuBar;
+    QMenu *menuFile;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -54,6 +61,14 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(780, 300);
+        actionSave = new QAction(MainWindow);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
+        actionSave_on_edit = new QAction(MainWindow);
+        actionSave_on_edit->setObjectName(QString::fromUtf8("actionSave_on_edit"));
+        actionSave_on_edit->setCheckable(true);
+        actionSave_on_edit->setChecked(true);
+        actionOpen = new QAction(MainWindow);
+        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         listWidget = new QListWidget(centralWidget);
@@ -111,10 +126,16 @@ public:
         age_warning->setObjectName(QString::fromUtf8("age_warning"));
         age_warning->setGeometry(QRect(460, 130, 171, 16));
         age_warning->setMouseTracking(false);
+        notification_label = new QLabel(centralWidget);
+        notification_label->setObjectName(QString::fromUtf8("notification_label"));
+        notification_label->setGeometry(QRect(288, 210, 251, 20));
+        notification_label->setAlignment(Qt::AlignCenter);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 780, 22));
+        menuFile = new QMenu(menuBar);
+        menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -122,6 +143,11 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+
+        menuBar->addAction(menuFile->menuAction());
+        menuFile->addAction(actionOpen);
+        menuFile->addAction(actionSave);
+        menuFile->addAction(actionSave_on_edit);
 
         retranslateUi(MainWindow);
 
@@ -131,6 +157,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        actionSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
+        actionSave_on_edit->setText(QApplication::translate("MainWindow", "Save on edit", nullptr));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", nullptr));
         add_pb->setText(QApplication::translate("MainWindow", "Add", nullptr));
         del_pb->setText(QApplication::translate("MainWindow", "Delete", nullptr));
         first_name_label->setText(QApplication::translate("MainWindow", "First Name", nullptr));
@@ -142,6 +171,8 @@ public:
         last_name_warning->setText(QString());
         stu_id_warning->setText(QString());
         age_warning->setText(QString());
+        notification_label->setText(QString());
+        menuFile->setTitle(QApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 
 };

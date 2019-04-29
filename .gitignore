@@ -2,3 +2,8 @@
 Makefile
 
 *.o
+*.user
+trival_sms.pro.user.4a20005
+*.user
+trival_sms.app/Contents/MacOS/trival_sms
+moc_mainwindow.cpp

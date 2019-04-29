@@ -1,56 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
-#include <iomanip>
-#include "json.h"
-#include <fstream>
-#define DATA_PATH "/home/flyingblu/data.json"
+#include "json_handler.h"
+#include "helper.h"
+#include <qfiledialog.h>
 
 using namespace std;
-
-void MainWindow::read_data(string path) {
-    ifstream json_file(path);
-    nlohmann::json j;
-    try {
-        json_file >> j;
-        json_file.close();
-    } catch (nlohmann::detail::parse_error& error) {
-        cerr << error.what() << endl;
-        cerr << "Overwriting or creating the file..." << endl;
-        return;
-    }
-    for (auto i = j.begin();i != j.end(); i++) {
-        string first = (*i)["first_name"].get<string>();
-        string last = (*i)["last_name"].get<string>();
-        string gender = (*i)["gender"].get<string>();
-        string age = (*i)["age"].get<string>();
-        string stu_id = (*i)["stu_id"].get<string>();
-        auto new_stu = Data::Student(QString::fromStdString(first), QString::fromStdString(last), stoi(gender), stoi(age), QString::fromStdString(stu_id));
-        this->students.push_back(new_stu);
-        ui->listWidget->addItem(new_stu.get_name());
-    }
-}
-
-void MainWindow::write_data(string path) {
-    ofstream json_file(path);
-    nlohmann::json j;
-    for(unsigned long i = 0; i < this->students.size(); i++) {
-        j[to_string(i)]["first_name"] = students[i].first_name.toStdString();
-        j[to_string(i)]["last_name"] = students[i].last_name.toStdString();
-        j[to_string(i)]["gender"] = to_string(students[i].gender);
-        j[to_string(i)]["age"] = to_string(students[i].age);
-        j[to_string(i)]["stu_id"] = students[i].stu_id.toStdString();
-    }
-    json_file << setw(4) << j;
-    json_file.close();
-}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    read_data(DATA_PATH);
+    json_desrialize(this->data_path);
     // initialize the gender combo box.
     ui->gender_cb->addItem("Set gender...");
     ui->gender_cb->addItem("Male");
@@ -72,35 +34,7 @@ void MainWindow::clear_formdata() {
     ui->stu_id_le->clear();
 }
 
-bool is_integer(QString input) {
-    if(input.size() == 0)
-        return false;
-    for (int i = 0; i < input.size(); i ++) {
-        if(input[i] > '9' || input[i] < '0')
-            return false;
-    }
-    return true;
-}
 
-bool is_character(QString input) {
-    if(input.size() == 0)
-        return false;
-    for (int i = 0; i < input.size(); i ++) {
-        if((input[i] > 'z' || input[i] < 'a') && (input[i] > 'Z' || input[i] < 'A'))
-            return false;
-    }
-    return true;
-}
-
-bool is_char_or_int(QString input) {
-    if(input.size() == 0)
-        return false;
-    for (int i = 0; i < input.size(); i ++) {
-        if((input[i] > 'z' || input[i] < 'a') && (input[i] > 'Z' || input[i] < 'A') && (input[i] < '0' || input[i] > '9'))
-            return false;
-    }
-    return true;
-}
 
 void MainWindow::on_listWidget_currentRowChanged(int currentRow)
 {
@@ -121,29 +55,41 @@ void MainWindow::on_add_pb_clicked()
 {
     QString first = ui->first_name_le->text();
     QString last = ui->last_name_le->text();
+
+    // Checking if the input is valid
     bool abort = false;
     if(!is_character(first)) {
         abort = true;
         ui->first_name_warning->setStyleSheet("QLabel {color : red; }");
         ui->first_name_warning->setText("Should only contain char");
+    } else {
+        ui->first_name_warning->setText("");
     }
     if(!is_character(last)) {
         abort = true;
         ui->last_name_warning->setStyleSheet("QLabel {color : red; }");
         ui->last_name_warning->setText("Should only contain char");
+    } else {
+        ui->last_name_warning->setText("");
     }
     if(!is_integer(ui->age_le->text())) {
         abort = true;
         ui->age_warning->setStyleSheet("QLabel {color : red; }");
         ui->age_warning->setText("Should only contain int");
+    } else {
+        ui->age_warning->setText("");
     }
     if(!is_char_or_int(ui->stu_id_le->text())) {
         abort = true;
         ui->stu_id_warning->setStyleSheet("QLabel {color : red; }");
         ui->stu_id_warning->setText("Should only contain int or char");
+    } else {
+        ui->stu_id_warning->setText("");
     }
     if(abort)
         return;
+
+    // Add a student or modify one
     if(ui->add_pb->text() == QString("Add")) {
         Data::Student new_stu = Data::Student(first, last, ui->gender_cb->currentIndex(), ui->age_le->text().toInt(), ui->stu_id_le->text());
         this->clear_formdata();
@@ -159,7 +105,8 @@ void MainWindow::on_add_pb_clicked()
         curr_stu->stu_id = ui->stu_id_le->text();
         ui->listWidget->currentItem()->setText(curr_stu->get_name());
     }
-    this->write_data(DATA_PATH);
+    if(this->save_on_modify)
+        this->json_serialize(this->data_path);
 }
 
 void MainWindow::on_del_pb_clicked()
@@ -171,7 +118,8 @@ void MainWindow::on_del_pb_clicked()
     it += index;
     students.erase(it);
     ui->listWidget->takeItem(index);
-    this->write_data(DATA_PATH);
+    if(this->save_on_modify)
+        this->json_serialize(this->data_path);
 }
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
@@ -188,4 +136,24 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
     }
     else
         mem = item;
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    this->json_serialize(this->data_path);
+}
+
+void MainWindow::on_actionSave_on_edit_triggered(bool checked)
+{
+    this->save_on_modify = checked;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    this->json_serialize(this->data_path);
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    this->data_path = QFileDialog::getOpenFileName().toStdString();
+    this->json_desrialize(this->data_path);
 }

@@ -27,12 +27,21 @@ private slots:
 
     void on_listWidget_itemClicked(QListWidgetItem *item);
 
+    void on_actionSave_triggered();
+
+    void on_actionSave_on_edit_triggered(bool checked);
+
+    void on_actionOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
     std::vector<Data::Student> students;
+    std::string data_path = "/Users/flyingblu/data.json";
+    bool save_on_modify = true;
     void clear_formdata();
-    void read_data(string path);
-    void write_data(string path);
+    void json_desrialize(string path);
+    void json_serialize(string path);
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H
