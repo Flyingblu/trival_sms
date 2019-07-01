@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
-#include "json_handler.h"
 #include "helper.h"
 #include <qfiledialog.h>
+#include <QMessageBox>
+#include "json_handler.h"
 
 using namespace std;
 
@@ -155,8 +156,13 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::on_actionOpen_triggered()
 {
-    this->set_data_path(QFileDialog::getOpenFileName().toStdString());
-    this->json_desrialize(this->data_path);
+    string path = QFileDialog::getOpenFileName().toStdString();
+    if(json_validate(path)) {
+        this->set_data_path(path);
+        this->json_desrialize(this->data_path);
+    } else {
+        QMessageBox::warning(this, QString("File open failed"), QString("The file is incorrect or broken. "));
+    }
 }
 
 void MainWindow::on_actionSave_as_triggered()

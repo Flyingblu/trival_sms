@@ -38,6 +38,7 @@ bool is_char_or_int(QString input) {
 }
 
 void MainWindow::set_data_path(string file_path) {
+    // first validate the json file, then
     // update data_path, file_name and window title each time being called
     this->data_path = file_path;
     auto i = file_path.end() - 1;

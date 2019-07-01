@@ -27,6 +27,7 @@ CONFIG += c++11
 INCLUDEPATH += /usr/include/openssl
 
 SOURCES += \
+        json_helper.cpp \
         main.cpp \
         mainwindow.cpp \
         startup.cpp

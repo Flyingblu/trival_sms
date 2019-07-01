@@ -1,5 +1,6 @@
 #include "startup.h"
 #include "ui_startup.h"
+#include "json_handler.h"
 #include "mainwindow.h"
 #include <QFileDialog>
 #include <QDialog>
@@ -34,9 +35,15 @@ void Startup::on_ok_pb_clicked()
     struct stat buf;
     // check if the file exists using system call
     if(stat(data_path.c_str(), &buf) == 0) {
-        MainWindow* w = new MainWindow(data_path);
-        w->show();
-        this->close();
+        // then validate the json file
+        if(json_validate(data_path)) {
+            MainWindow* w = new MainWindow(data_path);
+            w->show();
+            this->close();
+        } else {
+            ui->warning_label->setStyleSheet("QLabel {color : red; }");
+            ui->warning_label->setText("The file is incorrect or broken. ");
+        }
     } else {
         ui->warning_label->setStyleSheet("QLabel {color : red; }");
         ui->warning_label->setText("Please provide correct file path or create new file. ");
